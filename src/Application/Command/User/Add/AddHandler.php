@@ -9,15 +9,18 @@ use App\Domain\User\Repository\UserRepositoryInterface;
 
 class AddHandler implements CommandHandlerInterface
 {
+    /**
+     * @param AddCommand $command
+     */
     public function __invoke(AddCommand $command): void
     {
-        $user = $this->userRepository->get($command->userUuid);
-
-        $user->changeEmail($command->email);
-
-        $this->userRepository->store($user);
+        // TODO: Implement method.
     }
 
+    /**
+     * AddHandler constructor.
+     * @param UserRepositoryInterface $userRepository
+     */
     public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;

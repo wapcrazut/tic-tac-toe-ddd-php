@@ -12,6 +12,17 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
 
+    _instanceof:
+
+        App\Application\Command\CommandHandlerInterface:
+          public: true
+          tags:
+              - { name: tactician.handler, typehints: true, bus: command }
+
+        App\Application\Query\QueryHandlerInterface:
+          public: true
+          tags:
+              - { name: tactician.handler, typehints: true, bus: query }
 
     App\:
         resource: '../src/*'
@@ -22,9 +33,9 @@ services:
     App\UI\Cli\Command\:
         resource: '../src/UI/Cli/Command'
 
-    App\UI\Http\Rest\Controller\:
-        resource: '../src/UI/Http/Rest/Controller/*'
-        tags: [ 'controller.service_arguments' ]
+#    App\UI\Http\Rest\Controller\:
+#        resource: '../src/UI/Http/Rest/Controller/*'
+#        tags: [ 'controller.service_arguments' ]
 
     App\UI\Http\Web\Controller\:
         resource: '../src/UI/Http/Web/Controller/*'

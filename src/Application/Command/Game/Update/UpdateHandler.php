@@ -9,16 +9,18 @@ use App\Domain\Game\Repository\GameRepositoryInterface;
 
 class UpdateHandler implements CommandHandlerInterface
 {
+    /**
+     * @param UpdateCommand $command
+     */
     public function __invoke(UpdateCommand $command): void
     {
-        $game = $this->gameRepository->get($command->playerA);
-
-
-        $game->changeEmail($command->email);
-
-        $this->userRepository->store($game);
+        // TODO: Implement method.
     }
 
+    /**
+     * UpdateHandler constructor.
+     * @param GameRepositoryInterface $gameRepository
+     */
     public function __construct(GameRepositoryInterface $gameRepository)
     {
         $this->gameRepository = $gameRepository;
