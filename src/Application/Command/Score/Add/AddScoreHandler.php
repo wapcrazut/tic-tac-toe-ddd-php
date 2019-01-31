@@ -12,7 +12,7 @@ class AddScoreHandler implements CommandHandlerInterface
 {
     private $repository;
 
-    public function __construct($repository = null)
+    public function __construct(ScoreRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

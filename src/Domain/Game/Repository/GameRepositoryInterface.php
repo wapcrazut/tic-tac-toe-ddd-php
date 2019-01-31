@@ -22,6 +22,13 @@ interface GameRepositoryInterface
     public function update(Game $game);
 
     /**
+     * @param string $playerA
+     * @param string $playerB
+     * @return mixed
+     */
+    public function findByPlayers(string $playerA, string $playerB);
+
+    /**
      * @return mixed
      */
     public function findAll();

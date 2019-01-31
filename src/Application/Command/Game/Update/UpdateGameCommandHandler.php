@@ -19,6 +19,9 @@ class UpdateGameCommandHandler implements CommandHandlerInterface
 
     public function __invoke(UpdateGameCommand $command): void
     {
-        $this->repository->update(new Game($command->getRounds(), $command->getWinner()));
+        $game = new Game($command->getPlayerA(), $command->getPlayerB());
+        $game->setRounds($command->getRounds());
+        $game->setWinner($command->getWinner());
+        $this->repository->update($game);
     }
 }

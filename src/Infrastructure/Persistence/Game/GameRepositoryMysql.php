@@ -34,10 +34,12 @@ class GameRepositoryMysql implements GameRepositoryInterface
 
     public function update(Game $game)
     {
+        $playerA = $game->getPlayerA();
+        $playerB = $game->getPlayerB();
         $rounds = $game->getRounds();
         $winner = $game->getWinner();
         try {
-            return $this->connection->executeQuery("UPDATE game SET (score, winner) VALUES ('$rounds','$winner') WHERE player_a = '' AND player_b = ''");
+            return $this->connection->executeQuery("UPDATE game SET rounds = $rounds, winner = '$winner' WHERE player_a = '$playerA' AND player_b = '$playerB'");
         } catch (\Exception $exception) {
             return $exception->getMessage();
         }
@@ -47,6 +49,16 @@ class GameRepositoryMysql implements GameRepositoryInterface
     {
         try {
             return $this->connection->executeQuery("SELECT * FROM game")->fetchAll();
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+
+    public function findByPlayers(string $playerA, string $playerB)
+    {
+
+        try {
+            return $this->connection->executeQuery("SELECT * FROM game WHERE player_a = '$playerA' AND player_b = '$playerB'")->fetchAll();
         } catch (\Exception $exception) {
             return $exception->getMessage();
         }
