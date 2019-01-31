@@ -4,7 +4,9 @@
 namespace App\UI\Cli\Command;
 
 use App\Application\Command\Game\Add\AddGameCommand;
+use App\Application\Command\Game\Update\UpdateGameCommand;
 use App\Application\Command\User\Add\AddUserCommand;
+use App\Application\Query\User\FindByUsername\FindUsersByUsernameQuery;
 use League\Tactician\CommandBus;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,11 +30,24 @@ class GameStartCommand extends Command
 
     private $output;
 
+    private $board;
+
+    private $players;
+
+    private $moves = 0;
+
+    private $playerTurn = 0;
+
+    private $continueGame = true;
+
+    private $rounds = 0;
+
     public function __construct(CommandBus $commandBus, CommandBus $queryBus)
     {
         parent::__construct();
         $this->commandBus = $commandBus;
         $this->queryBus = $queryBus;
+        $this->players = array();
     }
 
 
@@ -57,90 +72,43 @@ class GameStartCommand extends Command
         $this->output = $output;
 
         $this->showIntro();
-        $playerA = $this->askUserData('first');
-        $playerB = $this->askUserData('second');
+        $this->askUserData('first');
+        $this->askUserData('second');
 
         try {
 
-            $command = new AddGameCommand($playerA['username'], $playerB['username']);
+            $command = new AddGameCommand($this->players[0]['username'], $this->players[1]['username']);
             $this->commandBus->handle($command);
 
             $output->writeln('<info>Created new game: </info>');
-            $output->writeln("Player A: ".$playerA['username']." vs. Player B: ".$playerB['username']);
+            $output->writeln("Player A: ".$this->players[0]['username']." vs. Player B: ".$this->players[1]['username']);
 
-            $board = array(
-                1 => '',
-                2 => '',
-                3 => '',
-                4 => '',
-                5 => '',
-                6 => '',
-                7 => '',
-                8 => '',
-                9 => ''
-            );
+            $this->board = array();
 
-            // TODO: Tablero model and id
-            // Only save selected positions
+            $this->showBoard($this->board);
 
-            $continueGame = false;
-            $rounds = 0;
+            while ($this->checkGameWinner() == null) {
 
-            while ($continueGame != false) {
-
-                foreach ($board as $move) {
-
-                    $movement = $this->askNextStep($playerA['mark']);
-
-                    if (empty($board[$movement]) || array_key_exists($movement, $board)) {
-                        $board[$movement] = $playerA['mark'];
-                    } else {
-                        $output->writeln('Ups! That cell is already taken or de movement is not valid.');
-                    }
+                try {
+                    $this->askNextStep();
+                    //$this->showBoard($this->board);
+                    var_dump($this->board);
+                } catch (\Exception $exception) {
+                    $this->output->writeln($exception->getMessage());
+                    continue;
                 }
 
-                $continueGame = $this->askNextRound();
-                $rounds++;
+                //$this->rounds++;
             }
 
 
+            $command = new UpdateGameCommand($this->rounds, '');
+            $this->commandBus->handle($command);
 
         } catch (\Exception $exception) {
             $output->writeln($exception->getMessage());
         }
 
-        // TODO: Implement command bus.
-        //$this->commandBus->handle($command);
-
-    }
-
-    public function checkAndCreateUser($username) {
-        $query = new FindUsersByUsernameQuery($username);
-        $user = $this->queryBus->handle($query);
-
-        try {
-
-            if (empty($user)) {
-                throw new \Exception('User doesn\'t exists');
-            } else {
-                $command = new AddUserCommand($username);
-                $this->commandBus->handle($command);
-                $this->output->writeln('<info>User Created: $username</info>');
-            }
-
-        } catch (\Exception $exception) {
-            $this->output->writeln($exception->getMessage());
-        }
-    }
-
-    public function createUser($username) {
-        try {
-            $command = new AddUserCommand($username);
-            $this->commandBus->handle($command);
-            $this->output->writeln('<info>User Created: $username</info>');
-        } catch (\Exception $exception) {
-            throw new \Exception('Canr\'t create user');
-        }
     }
 
     public function askUserData($player) {
@@ -149,24 +117,84 @@ class GameStartCommand extends Command
         $question = new Question("Username of $player player: ");
         $username = $helper->ask($this->input, $this->output, $question);
 
-        $question = new ChoiceQuestion('Please select your marker: ', ['X', 'O']);
-        $question->setErrorMessage('Marker %s is invalid.');
-        $marker = $helper->ask($this->input, $this->output, $question);
+        $this->checkAndCreateUser($username);
 
-        $this->output->writeln("Player $username selected: $marker");
-        $player = array(
-            'username' => $username,
-            'mark' => $marker
-        );
+        while (count($this->players) < 2) {
 
-        return $player;
+            $question = new ChoiceQuestion('Please select your marker: ', ['X', 'O']);
+            $question->setErrorMessage('Marker %s is invalid.');
+            $marker = $helper->ask($this->input, $this->output, $question);
+
+            try {
+                $this->checkMarkers($marker);
+                $this->output->writeln("Player $username selected: $marker");
+                $this->players[] = array(
+                    'username' => $username,
+                    'marker' => $marker
+                );
+                return $player;
+            } catch (\Exception $exception) {
+                $this->output->writeln($exception->getMessage());
+                continue;
+            }
+        }
+
+    }
+
+    public function checkMarkers($marker) {
+
+        foreach ($this->players as $player) {
+            if ($player['marker'] == $marker) {
+                throw new \Exception('That option is already taken.');
+            }
+        }
+
+        return false;
+    }
+
+    public function checkAndCreateUser($username) {
+
+        $query = new FindUsersByUsernameQuery($username);
+        $user = $this->queryBus->handle($query);
+
+        try {
+
+            if (empty($user)) {
+                $command = new AddUserCommand($username);
+                $this->commandBus->handle($command);
+                $this->output->writeln("<info>User created: $username</info>");
+            } else {
+                $this->output->writeln("<info>Loged in as: $username</info>");
+            }
+
+        } catch (\Exception $exception) {
+            $this->output->writeln($exception->getMessage());
+        }
     }
 
     public function askNextStep() {
 
+        $this->playerTurn = $this->moves % count($this->players);
+        $player = $this->players[$this->playerTurn];
+
+
         $helper = $this->getHelper('question');
-        $question = new Question("Choose your cell number for mark: ");
+        $question = new Question($player['username'].", choose your cell number for mark: ");
         $cell = $helper->ask($this->input, $this->output, $question);
+
+        if ($cell >= 0 && $cell <= 9) {
+            
+        } else {
+            throw new \Exception('Ups! That cell is already taken or de movement is not valid.');
+        }
+
+        if (empty($this->board[$cell])) {
+            $this->board[$cell] = array('mark' => $player['mark']);
+            $this->moves++;
+        } else {
+            throw new \Exception('Ups! That cell is already taken or de movement is not valid.');
+        }
+
 
         return $cell;
     }
@@ -177,11 +205,25 @@ class GameStartCommand extends Command
         $question = new ConfirmationQuestion('Want to continue another round? (y/n)', false,  '/^(y)/i');
         $response = $helper->ask($this->input, $this->output, $question);
 
-        if (!$helper->ask($this->input, $this->output, $question)) {
-            return true;
-        }
-
         return $response;
+    }
+
+    public function showBoard() {
+        $section = $this->output->section();
+        $section->writeln("
+             ________________________________________________________________
+            |________________________________________________________________|
+            |                         Choose wisely...                       |
+            |                                                                |
+            |                           $this->board[0] | $this->board[1] | $this->board[2]                            |
+            |                          ---|---|---                           |
+            |                           $this->board[3] | $this->board[4] | $this->board[5]                            |
+            |                          ---|---|---                           |
+            |                           $this->board[6] | $this->board[7] | $this->board[8]                            |
+            |                                                                |
+            | Type the number of your next move.                             |
+            |________________________________________________________________|
+        ");
     }
 
     public function showIntro() {
@@ -215,6 +257,10 @@ class GameStartCommand extends Command
 
     public function gameIsDraw() {
         // TODO: Pending to implement.
+    }
+
+    public function checkGameWinner() {
+        $this->board;
     }
 
 }

@@ -46,7 +46,7 @@ class ShowScoreCommand extends Command
         try {
 
             if (empty($scores)) {
-                throw new \Exception('There is not scores to show.');
+                throw new \Exception('There is no scores to show.');
             } else {
 
                 $output->writeln('<info>Score list: </info>');
