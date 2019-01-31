@@ -19,7 +19,7 @@ interface UserRepositoryInterface
      * @param string $username
      * @return mixed
      */
-    public function delete(string $username);
+    public function delete(User $user);
 
     /**
      * @param string $username

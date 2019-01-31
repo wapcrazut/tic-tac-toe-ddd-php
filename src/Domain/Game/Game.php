@@ -2,43 +2,30 @@
 
 namespace App\Domain\Game;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * Class Game
- * @ORM\Entity(repositoryClass="App\Domain\Game\Repository\GameRepository")
- * @ORM\Table(name="game")
- */
 class Game
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @var
      */
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(name="player_a", type="string")
      */
     private $playerA;
 
     /**
      * @var string
-     * @ORM\Column(name="player_b", type="string")
      */
     private $playerB;
 
     /**
-     * @var int
-     * @ORM\Column(name="rounds", type="integer", nullable=true)
+     * @var
      */
     private $rounds;
 
     /**
-     * @var string
-     * @ORM\Column(name="winner", type="string", nullable=true)
+     * @var
      */
     private $winner;
 

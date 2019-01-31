@@ -1,11 +1,12 @@
 <?php
 
 
-namespace App\Domain\User;
+namespace App\Domain\Score;
 
 
-class User
+class Score
 {
+
     /**
      * @var
      */
@@ -17,12 +18,19 @@ class User
     private $username;
 
     /**
-     * User constructor.
-     * @param string $username
+     * @var int
      */
-    public function __construct(string $username)
+    private $score;
+
+    /**
+     * Score constructor.
+     * @param string $username
+     * @param int $score
+     */
+    public function __construct(string $username, int $score)
     {
         $this->username = $username;
+        $this->score = $score;
     }
 
     /**
@@ -57,7 +65,20 @@ class User
         $this->username = $username;
     }
 
+    /**
+     * @return int
+     */
+    public function getScore(): int
+    {
+        return $this->score;
+    }
 
-
+    /**
+     * @param int $score
+     */
+    public function setScore(int $score): void
+    {
+        $this->score = $score;
+    }
 
 }

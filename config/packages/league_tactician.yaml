@@ -4,9 +4,9 @@ tactician:
     default_bus: command
     method_inflector: tactician.handler.method_name_inflector.invoke
     commandbus:
-        command:
-            middleware:
-                - tactician.middleware.doctrine
         query:
             middleware:
-                - tactician.middleware.doctrine
+                - tactician.commandbus.query.middleware.command_handler
+        command:
+            middleware:
+                - tactician.commandbus.command.middleware.command_handler

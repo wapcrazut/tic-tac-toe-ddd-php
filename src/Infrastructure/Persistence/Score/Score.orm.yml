@@ -1,0 +1,16 @@
+App\Domain\Score\Score:
+  type: entity
+  table: score
+
+  id:
+    id:
+      type: integer
+      column: id
+      length: 36
+  fields:
+    username:
+      type: string
+      column: username
+    score:
+      type: integer
+      column: score

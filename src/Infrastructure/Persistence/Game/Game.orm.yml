@@ -1,0 +1,22 @@
+App\Domain\Game\Game:
+  type: entity
+  table: game
+
+  id:
+    id:
+      type: integer
+      column: id
+      length: 36
+  fields:
+    playerA:
+      type: string
+      column: player_a
+    playerB:
+      type: string
+      column: player_b
+    score:
+      type: integer
+      column: score
+    winner:
+      type: string
+      column: winner

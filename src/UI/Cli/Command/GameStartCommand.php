@@ -3,10 +3,8 @@
 
 namespace App\UI\Cli\Command;
 
-use App\Application\Command\Game\Add\AddCommand as StartGame;
-use App\Domain\Game\Game;
-use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Application\Command\Game\Add\AddGameCommand;
+use App\Application\Command\User\Add\AddUserCommand;
 use League\Tactician\CommandBus;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,6 +16,27 @@ use Symfony\Component\Console\Question\Question;
 
 class GameStartCommand extends Command
 {
+
+    /**
+     * @var CommandBus
+     */
+    private $commandBus;
+
+    private $queryBus;
+
+    private $input;
+
+    private $output;
+
+    public function __construct(CommandBus $commandBus, CommandBus $queryBus)
+    {
+        parent::__construct();
+        $this->commandBus = $commandBus;
+        $this->queryBus = $queryBus;
+    }
+
+
+
     protected function configure(): void
     {
         $this
@@ -41,13 +60,10 @@ class GameStartCommand extends Command
         $playerA = $this->askUserData('first');
         $playerB = $this->askUserData('second');
 
-        $gameRepository = $this->entityManager->getRepository("App\Domain\Game\Game");
-
         try {
 
-            $game = new Game($playerA['username'], $playerB['username']);
-            $this->entityManager->persist($game);
-            $this->entityManager->flush();
+            $command = new AddGameCommand($playerA['username'], $playerB['username']);
+            $this->commandBus->handle($command);
 
             $output->writeln('<info>Created new game: </info>');
             $output->writeln("Player A: ".$playerA['username']." vs. Player B: ".$playerB['username']);
@@ -63,6 +79,9 @@ class GameStartCommand extends Command
                 8 => '',
                 9 => ''
             );
+
+            // TODO: Tablero model and id
+            // Only save selected positions
 
             $continueGame = false;
             $rounds = 0;
@@ -93,6 +112,35 @@ class GameStartCommand extends Command
         // TODO: Implement command bus.
         //$this->commandBus->handle($command);
 
+    }
+
+    public function checkAndCreateUser($username) {
+        $query = new FindUsersByUsernameQuery($username);
+        $user = $this->queryBus->handle($query);
+
+        try {
+
+            if (empty($user)) {
+                throw new \Exception('User doesn\'t exists');
+            } else {
+                $command = new AddUserCommand($username);
+                $this->commandBus->handle($command);
+                $this->output->writeln('<info>User Created: $username</info>');
+            }
+
+        } catch (\Exception $exception) {
+            $this->output->writeln($exception->getMessage());
+        }
+    }
+
+    public function createUser($username) {
+        try {
+            $command = new AddUserCommand($username);
+            $this->commandBus->handle($command);
+            $this->output->writeln('<info>User Created: $username</info>');
+        } catch (\Exception $exception) {
+            throw new \Exception('Canr\'t create user');
+        }
     }
 
     public function askUserData($player) {
@@ -169,21 +217,4 @@ class GameStartCommand extends Command
         // TODO: Pending to implement.
     }
 
-    public function __construct(CommandBus $commandBus, EntityManagerInterface $entityManager)
-    {
-        parent::__construct();
-        $this->commandBus = $commandBus;
-        $this->entityManager = $entityManager;
-    }
-
-    /**
-     * @var CommandBus
-     */
-    private $commandBus;
-
-    private $entityManager;
-
-    private $input;
-
-    private $output;
 }

@@ -10,7 +10,9 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
+        bind:
+            $queryBus: '@tactician.commandbus.query'
+            $commandBus: '@tactician.commandbus.command'
 
     _instanceof:
 
@@ -26,17 +28,30 @@ services:
 
     App\:
         resource: '../src/*'
-        exclude: '../src/**/{Migrations,EventSubscriber}'
+        exclude: '../src/**/{DependencyInjection,Migrations,EventSubscriber}'
 
     ### UI
 
     App\UI\Cli\Command\:
         resource: '../src/UI/Cli/Command'
 
-#    App\UI\Http\Rest\Controller\:
-#        resource: '../src/UI/Http/Rest/Controller/*'
-#        tags: [ 'controller.service_arguments' ]
-
     App\UI\Http\Web\Controller\:
         resource: '../src/UI/Http/Web/Controller/*'
         tags: [ 'controller.service_arguments' ]
+
+    ### Repository services
+
+    app.infrastructure.user.repository:
+        class: App\Infrastructure\Persistence\User\UserRepositoryMysql
+        public: true
+        arguments: ['@doctrine.orm.entity_manager']
+
+    app.infrastructure.score.repository:
+        class: App\Infrastructure\Persistence\Score\ScoreRepositoryMysql
+        public: true
+        arguments: ['@doctrine.orm.entity_manager']
+
+    app.infrastructure.game.repository:
+        class: App\Infrastructure\Persistence\Game\GameRepositoryMysql
+        public: true
+        arguments: ['@doctrine.orm.entity_manager']

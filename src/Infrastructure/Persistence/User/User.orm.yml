@@ -1,0 +1,13 @@
+App\Domain\User\User:
+  type: entity
+  table: user
+
+  id:
+    id:
+      type: integer
+      column: id
+      length: 36
+  fields:
+    username:
+      type: string
+      column: username

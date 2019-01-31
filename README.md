@@ -9,7 +9,7 @@ Using a simple Tic tac toe game as reference.
 2. Install dependencies `composer install`
 3. Configure `.env` file with a new database connection.
 `DATABASE_URL=mysql://user:password@127.0.0.1:3306/tic-tac-toe`
-4. Create database schema `php bin/console doctrine:schema:update --force`
+4. Import database schema, execute `schema.sql` from `database` directory. 
 2. Run `game:start`
 3. Follow game instructions.
 
@@ -18,7 +18,7 @@ Using a simple Tic tac toe game as reference.
 1. `user:create <username>` : Creates an user
 2. `user:delete <username>` : Deletes an user
 3. `game:start` : Starts a tic tac toe game
-4. `leaderboards:show` : Shows leaderboards
+4. `scores:show` : Shows leaderboards
 
 # Warning
 
