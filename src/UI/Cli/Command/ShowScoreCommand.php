@@ -12,10 +12,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ShowScoreCommand extends Command
 {
+    /**
+     * @var CommandBus
+     */
     private $queryBus;
 
+    /**
+     * @var EntityManagerInterface
+     */
     private $entityManager;
 
+    /**
+     * ShowScoreCommand constructor.
+     * @param CommandBus $queryBus
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(CommandBus $queryBus, EntityManagerInterface $entityManager)
     {
         parent::__construct();
@@ -23,6 +34,9 @@ class ShowScoreCommand extends Command
         $this->entityManager = $entityManager;
     }
 
+    /**
+     *
+     */
     protected function configure(): void
     {
         $this
@@ -51,7 +65,7 @@ class ShowScoreCommand extends Command
 
                 $output->writeln('<info>Score list: </info>');
                 foreach ($scores as $record) {
-                    $output->writeln($record->getUsername()." : ".$record->getScore());
+                    $output->writeln($record['username']." : ".$record['score']);
                 }
 
             }
@@ -60,7 +74,5 @@ class ShowScoreCommand extends Command
             $output->writeln($exception->getMessage());
         }
 
-        // TODO: Implement command bus.
-        //$this->commandBus->handle($command);
     }
 }

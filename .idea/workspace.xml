@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64ea9e40-9d7a-4377-a52d-aba2bfd441a2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Command/Game/Update/UpdateGameCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Command/Game/Update/UpdateGameCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Command/Game/Update/UpdateGameCommandHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Command/Game/Update/UpdateGameCommandHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Command/Score/Add/AddScoreHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Command/Score/Add/AddScoreHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Command/Score/Update/UpdateScoreHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Command/Score/Update/UpdateScoreHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Query/Game/FindAll/FindAllHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Query/Game/FindAll/FindAllGamesHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Query/Game/FindAll/FindAllQuery.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Query/Game/FindAll/FindAllGamesQuery.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Game/Repository/GameRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Game/Repository/GameRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Game/GameRepositoryMysql.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Persistence/Game/GameRepositoryMysql.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Score/ScoreRepositoryMysql.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Persistence/Score/ScoreRepositoryMysql.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/Cli/Command/GameStartCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Cli/Command/GameStartCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/Cli/Command/ShowScoreCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Cli/Command/ShowScoreCommand.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GameStartCommand.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GameStartCommand.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/UI/Cli/Command/GameStartCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="269" column="88" selection-start-line="269" selection-start-column="88" selection-end-line="269" selection-end-column="88" />
+            <state relative-caret-position="709">
+              <caret line="275" column="4" lean-forward="true" selection-start-line="275" selection-start-column="4" selection-end-line="275" selection-end-column="4" />
               <folding>
                 <element signature="e#39#91#0#PHP" expanded="true" />
               </folding>
@@ -41,11 +31,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UpdateGameCommand.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/Command/Game/Update/UpdateGameCommand.php">
+      <file leaf-file-name="DeleteUserCommand.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/UI/Cli/Command/DeleteUserCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="472">
+              <caret line="34" column="36" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
+              <folding>
+                <element signature="e#39#111#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreateUserCommand.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/UI/Cli/Command/CreateUserCommand.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="81">
+              <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -55,6 +57,18 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="408">
               <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShowScoreCommand.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/UI/Cli/Command/ShowScoreCommand.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="608">
+              <caret line="67" column="70" selection-start-line="67" selection-start-column="70" selection-end-line="67" selection-end-column="70" />
+              <folding>
+                <element signature="e#39#98#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -73,15 +87,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
               <caret line="14" column="43" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UpdateScoreHandler.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/Command/Score/Update/UpdateScoreHandler.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -116,15 +121,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Game.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Domain/Game/Game.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="38" column="64" selection-start-line="38" selection-start-column="64" selection-end-line="38" selection-end-column="64" />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
@@ -140,6 +136,7 @@
       <find>query(</find>
       <find>Leaderboard</find>
       <find>checkGameDraw</find>
+      <find>round?</find>
     </findStrings>
     <replaceStrings>
       <replace>Score</replace>
@@ -191,7 +188,6 @@
         <option value="$PROJECT_DIR$/src/Infrastructure/Persistence/Game/Game.orm.yml" />
         <option value="$PROJECT_DIR$/config/packages/doctrine.yaml" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/UI/Cli/Command/ShowScoreCommand.php" />
         <option value="$PROJECT_DIR$/src/Application/Query/Game/FindAll/FindAllGamesQuery.php" />
         <option value="$PROJECT_DIR$/src/Application/Query/Game/FindAll/FindAllGamesHandler.php" />
         <option value="$PROJECT_DIR$/src/Application/Query/Game/FindByPlayers/FindByPlayersHandler.php" />
@@ -206,6 +202,7 @@
         <option value="$PROJECT_DIR$/src/Infrastructure/Persistence/Game/GameRepositoryMysql.php" />
         <option value="$PROJECT_DIR$/src/Infrastructure/Persistence/Score/ScoreRepositoryMysql.php" />
         <option value="$PROJECT_DIR$/src/UI/Cli/Command/GameStartCommand.php" />
+        <option value="$PROJECT_DIR$/src/UI/Cli/Command/ShowScoreCommand.php" />
       </list>
     </option>
   </component>
@@ -518,12 +515,12 @@
       <workItem from="1548869089115" duration="1743000" />
       <workItem from="1548873795988" duration="22154000" />
       <workItem from="1548919842130" duration="2680000" />
-      <workItem from="1548959221254" duration="9270000" />
+      <workItem from="1548959221254" duration="9442000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64603000" />
+    <option name="totallyTimeSpent" value="64775000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -655,23 +652,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/Cli/Command/CreateUserCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/Cli/Command/DeleteUserCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="34" column="36" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
-          <folding>
-            <element signature="e#39#111#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/Score/Repository/ScoreRepositoryInterface .php" />
     <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Score/Score.orm.yml">
       <provider selected="true" editor-type-id="text-editor">
@@ -715,16 +695,6 @@
             <caret line="29" selection-start-line="29" selection-end-line="29" />
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/Cli/Command/ShowScoreCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="48" column="49" selection-start-line="48" selection-start-column="49" selection-end-line="48" selection-end-column="49" />
-          <folding>
-            <element signature="e#39#98#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -886,10 +856,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/Cli/Command/GameStartCommand.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="269" column="88" selection-start-line="269" selection-start-column="88" selection-end-line="269" selection-end-column="88" />
+        <state relative-caret-position="709">
+          <caret line="275" column="4" lean-forward="true" selection-start-line="275" selection-start-column="4" selection-end-line="275" selection-end-column="4" />
           <folding>
             <element signature="e#39#91#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/Cli/Command/DeleteUserCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="472">
+          <caret line="34" column="36" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
+          <folding>
+            <element signature="e#39#111#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/Cli/Command/CreateUserCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/Cli/Command/ShowScoreCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="608">
+          <caret line="67" column="70" selection-start-line="67" selection-start-column="70" selection-end-line="67" selection-end-column="70" />
+          <folding>
+            <element signature="e#39#98#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
